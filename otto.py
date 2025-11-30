@@ -12,30 +12,41 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt6.QtGui import QPainter, QColor, QBrush, QPen, QFont, QLinearGradient, QFontDatabase
 
 # =======================
+# Constantes físicas
+# =======================
+R = 287.0
+k = 1.4
+cv = R / (k - 1)
+# Parâmetros ocultos (modelo ideal)
+T1_FIXO = 300.0
+ALFA_FIXO = 3.35
+
+# =======================
 # CÁLCULOS CICLO OTTO
 # =======================
 def ciclo_otto_ideal(P1, T1, r, alpha, V_total, Ncyl):
-    Vd = (V_total / 1000) / Ncyl
+    Vd = (V_total / 1000) / Ncyl #divide o volume total pelo numero de cilindros e coloca em m³
     Vc = Vd / (r - 1)
     V1 = Vd + Vc
     V2 = Vc
 
     m = (P1 * V1) / (R * T1)
 
-    T2 = T1 * r**(gamma-1)
-    P2 = P1 * r**gamma
+    T2 = T1 * r**(k-1)
+    P2 = P1 * r**k
 
     T3 = alpha * T2
     P3 = P2 * alpha
 
-    T4 = T3 / r**(gamma-1)
-    P4 = P3 / r**gamma
+    T4 = T3 / r**(k-1)
+    P4 = P3 / r**k
 
     Qin = m * cv * (T3 - T2)
     Qout = m * cv * (T4 - T1)
     W = Qin - Qout
 
-    eta = 1 - 1/(r**(gamma-1))
+    #eta = 1 - 1/(r**(k-1))
+    eta = W/Qin
 
     estados = {
         "1": (P1, V1, T1),
