@@ -1,4 +1,3 @@
-# atkinson.py
 import numpy as np
 
 # =======================
@@ -18,7 +17,7 @@ def ciclo_atkinson_ideal(P1, T1, r_comp, r_exp, alpha, V_total, Ncyl):
     Vc = Vd / (r_comp - 1)
     V1 = Vd + Vc
     V2 = Vc
-    V4 = V1 * (r_exp / r_comp)  # Volume no final da expansão (maior!)
+    V4 = V1 * (r_exp / r_comp)  # Volume no final da expansão
     
     m = (P1 * V1) / (R * T1)
     
@@ -27,12 +26,12 @@ def ciclo_atkinson_ideal(P1, T1, r_comp, r_exp, alpha, V_total, Ncyl):
     P2 = P1 * r_comp**gamma
     
     # Combustão (2->3) - volume constante
-    # Atkinson usa alpha menor (combustão menos intensa + otimizado para eficiência)
+    # Atkinson usa alpha menor 
     alpha_atkinson = alpha * 0.82  # 18% menor que Otto
     T3 = alpha_atkinson * T2
     P3 = P2 * alpha_atkinson
     
-    # Expansão (3->4) - MAIOR que no Otto!
+    # Expansão (3->4)
     T4 = T3 / r_exp**(gamma-1)
     P4 = P3 / r_exp**gamma
     
@@ -41,12 +40,8 @@ def ciclo_atkinson_ideal(P1, T1, r_comp, r_exp, alpha, V_total, Ncyl):
     Qout = m * cv * (T4 - T1)
     W = Qin - Qout
     
-    # Eficiência teórica do Atkinson (CORRIGIDA)
-    # η = 1 - (T4 - T1)/(T3 - T2)
-    # Simplificando: η = 1 - (1/r_exp^(γ-1))
+    # Eficiência teórica do Atkinson 
     eta = 1 - (1 / r_exp**(gamma-1))
-    
-    # NÃO aplicar perdas extras aqui, o W já reflete a realidade
     
     estados = {
         "1": (P1, V1, T1),
@@ -82,7 +77,7 @@ def gerar_curvas_atkinson(estados, r_comp, r_exp):
     p23 = np.linspace(P2, P3, 20)
     t23 = np.linspace(T2, T3, 20)
     
-    # Expansão (3->4) - MAIOR que compressão
+    # Expansão (3->4)
     v34 = np.linspace(V2, V4, 60)
     p34 = P3 * (V2 / v34) ** gamma
     t34 = T3 * (V2 / v34) ** (gamma - 1)
