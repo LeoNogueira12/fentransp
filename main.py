@@ -1,4 +1,3 @@
-# main.py - Versão multi-ciclo
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,7 +9,7 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import QTimer
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
-# Importe os módulos dos ciclos
+
 from pistao import PistonWidget
 from otto import ciclo_otto_ideal
 from atkinson import ciclo_atkinson_ideal, gerar_curvas_atkinson
