@@ -1,4 +1,3 @@
-# diesel.py
 import numpy as np
 
 # =======================
@@ -18,7 +17,7 @@ def ciclo_diesel_ideal(P1, T1, r, rc, V_total, Ncyl):
     Vc = Vd / (r - 1)
     V1 = Vd + Vc
     V2 = Vc
-    V3 = V2 * rc  # Volume aumenta durante combustão!
+    V3 = V2 * rc  
     
     m = (P1 * V1) / (R * T1)
     
@@ -26,8 +25,8 @@ def ciclo_diesel_ideal(P1, T1, r, rc, V_total, Ncyl):
     T2 = T1 * r**(k-1)
     P2 = P1 * r**k
     
-    # Combustão a PRESSÃO CONSTANTE (2->3)
-    P3 = P2  # Pressão constante!
+    # Combustão isobárica (2->3)
+    P3 = P2  
     T3 = T2 * rc
     
     # Expansão adiabática (3->4)
@@ -75,7 +74,7 @@ def gerar_curvas_diesel(estados, rc):
     
     # Combustão a PRESSÃO CONSTANTE (2->3)
     v23 = np.linspace(V2, V3, 30)
-    p23 = np.full_like(v23, P2)  # Pressão constante!
+    p23 = np.full_like(v23, P2)  
     t23 = np.linspace(T2, T3, 30)
     
     # Expansão (3->4)
