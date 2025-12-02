@@ -17,7 +17,6 @@ from PyQt6.QtGui import QPainter, QColor, QBrush, QPen, QFont, QLinearGradient, 
 R = 287.0
 k = 1.4
 cv = R / (k - 1)
-# Parâmetros ocultos (modelo ideal)
 T1_FIXO = 300.0
 ALFA_FIXO = 3.35
 
@@ -25,7 +24,7 @@ ALFA_FIXO = 3.35
 # CÁLCULOS CICLO OTTO
 # =======================
 def ciclo_otto_ideal(P1, T1, r, alpha, V_total, Ncyl):
-    Vd = (V_total / 1000) / Ncyl #divide o volume total pelo numero de cilindros e coloca em m³
+    Vd = (V_total / 1000) / Ncyl 
     Vc = Vd / (r - 1)
     V1 = Vd + Vc
     V2 = Vc
@@ -45,8 +44,7 @@ def ciclo_otto_ideal(P1, T1, r, alpha, V_total, Ncyl):
     Qout = m * cv * (T4 - T1)
     W = Qin - Qout
 
-    #eta = 1 - 1/(r**(k-1))
-    eta = W/Qin
+    eta = 1 - 1/(r**(k-1))
 
     estados = {
         "1": (P1, V1, T1),
